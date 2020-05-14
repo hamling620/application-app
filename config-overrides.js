@@ -7,6 +7,6 @@ module.exports = override(
     }),
     addLessLoader({
         javascriptEnabled: true,
-        modifyVars: { 'brand-primary': '#2ab561' },
+        modifyVars: { 'brand-primary': '#2ab561', 'brand-primary-tap': '#2ab561' },
     }),
 )
