@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import Logo from '../../component/logo'
-import { List, InputItem, Radio, WingBlank, WhiteSpace, Button } from 'antd-mobile'
+import { List, InputItem, Radio, WingBlank, WhiteSpace, Button, NoticeBar } from 'antd-mobile'
+import { register } from '../../store/reducers/user'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 const { RadioItem } = Radio
 
 class Register extends Component {
     constructor () {
         super()
         this.state = {
-            user: '',
+            username: '',
             pwd: '',
             repeatpwd: '',
             type: 'genius'
@@ -16,11 +19,14 @@ class Register extends Component {
     render () {
         return (
             <div>
+                {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null}
                 <Logo/>
                 <WingBlank>
                     <List>
+                        { this.props.msg ? <NoticeBar icon={null}>{this.props.msg}</NoticeBar> : null }
+                        <WhiteSpace/>
                         <InputItem
-                            onChange={(value) => this.handleChange('user', value)}
+                            onChange={(value) => this.handleChange('username', value)}
                         >用户</InputItem>
                         <WhiteSpace/>
                         <InputItem
@@ -56,8 +62,18 @@ class Register extends Component {
     }
 
     handleRegister = () => {
-        console.log(this.state)
+        this.props.register(this.state)
     }
 }
 
-export default Register
+const stateToProps = state => {
+    return {
+        ...state.user
+    }
+}
+const dispatchToProps = dispatch => {
+    return {
+        register: (state) => dispatch(register(state))
+    }
+}
+export default connect(stateToProps, dispatchToProps)(Register)

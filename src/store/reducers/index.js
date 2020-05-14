@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import users from './user'
+import user from './user'
 
-const reducers = combineReducers({ users})
+const reducers = combineReducers({ user })
 
 export default reducers

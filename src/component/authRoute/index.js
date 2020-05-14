@@ -1,16 +1,36 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
+import axios from '../../lib/axios'
+import { connect } from 'react-redux'
+import { loadData } from '../../store/reducers/user'
 
-class AuthRoute extends Component {
+class AuthRoute extends React.Component {
     componentDidMount () {
-        this.props.history.push('/login')
+        const publicList = ['login', 'register']
+        const pathname = this.props.history.pathname
+        if (publicList.includes(pathname)) {
+            return null
+        }  
+        axios.get('/user/info').then(res => {
+            if (res.status === 200) {
+                if (res.data.code === 0) {
+                    this.props.loadData(res.data.data)
+                } else {
+                    this.props.history.push('/login')
+                }
+            }
+        })
     }
 
     render () {
-        return (
-           <div>hello boss</div>
-        )
+        return null
     }
 }
 
-export default withRouter(AuthRoute)
+const dispatchToProps = dispatch => {
+    return {
+        loadData: (state) => dispatch(loadData(state))
+    }
+}
+
+export default connect(null, dispatchToProps)(withRouter(AuthRoute))

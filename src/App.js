@@ -1,20 +1,17 @@
-import React, { Suspense, lazy} from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-const Login = lazy(() => import('./container/login')) 
-const Register = lazy(() => import('./container/register')) 
-// const AuthRoute = lazy(() => import('./component/authRoute'))
+import React from 'react'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Login from './container/login'
+import Register from './container/register'
+import AuthRoute from './component/authRoute'
 
 function App() {
   return (
     <Router>
-      <Suspense fallback={<div>Loading...</div>}>
+        <AuthRoute></AuthRoute>
         <Switch>
-          {/* <AuthRoute></AuthRoute> */}
           <Route path="/login" component={Login}></Route>
           <Route path="/register" component={Register}></Route>
-          <Redirect to="/login"/>
         </Switch>
-      </Suspense>
     </Router>
   )
 }
