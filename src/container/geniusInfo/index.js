@@ -4,56 +4,35 @@ import AvatarSelect from '../../component/avatarSelect'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { update } from '../../store/reducers/user'
+import myForm from '../../component/myForm'
 
 
 class GeniusInfo extends Component {
-    constructor () {
-        super()
-        this.state = {
-            avatar: '',
-            title: '',
-            desc: ''
-        }
-    }
-
     render () {
+        const redirect = this.props.redirectTo
+        const pathname = this.props.location.pathname
         return (
             <div>
-                {this.props.redirectTo ? <Redirect to={this.props.redirectTo}/> : null}
-                <NavBar mode="dark">人才详情</NavBar>
-                <AvatarSelect selectAvatar={this.selectAvatar}/>
+                {redirect && redirect !== pathname ? <Redirect to={this.props.redirectTo}/> : null}
+                <NavBar mode="dark">人才信息完善</NavBar>
+                <AvatarSelect selectAvatar={icon => this.props.handleChange('avatar', icon)}/>
                 <InputItem
-                    onChange={val => this.handleChange('title', val)}
+                    onChange={val => this.props.handleChange('title', val)}
                 >求职岗位</InputItem>
                  <TextareaItem
                     title="个人简介"
                     autoHeight
                     rows={3}
-                    onChange={val => this.handleChange('desc', val)}
+                    onChange={val => this.props.handleChange('desc', val)}
                 />
-                <Button type="primary" onClick={() => this.props.update(this.state)}>保存</Button>
+                <Button type="primary" onClick={() => this.props.update(this.props.state)}>保存</Button>
             </div>
         )
     }
 
-    handleChange = (key, value) => {
-        this.setState({
-            [key]: value
-        })
-    }
-
-    selectAvatar = (icon) => {
-        this.setState({
-            avatar: icon
-        })    
-    }
 }
 
-const stateToProps = state => {
-    return {
-        ...state.user
-    }
-}
+const stateToProps = state => state.user
 
 const dispatchToProps = dispatch => {
     return {
@@ -61,4 +40,4 @@ const dispatchToProps = dispatch => {
     }
 }
 
-export default connect(stateToProps, dispatchToProps)(GeniusInfo)
+export default connect(stateToProps, dispatchToProps)(myForm(GeniusInfo))

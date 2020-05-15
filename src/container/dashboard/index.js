@@ -5,11 +5,9 @@ import NavLinkBar from '../../component/navLinkBar'
 import { Route } from 'react-router-dom'
 import Boss from '../../container/boss'
 import Genius from '../../container/genius'
+import User from '../../container/user'
 
 function Msg () {
-    return <h1>Genius</h1>
-}
-function Me () {
     return <h1>Genius</h1>
 }
 
@@ -45,8 +43,8 @@ class DashBoard extends Component {
                 path: '/user',
                 text: '我',
                 icon: 'user',
-                title: '用户信息',
-                component: Me
+                title: '用户个人中心',
+                component: User
             }
         ]
         const target = navList.find(item => (item.path === pathname)) 
@@ -63,10 +61,6 @@ class DashBoard extends Component {
     }
 }
 
-const stateToProps = state => {
-    return {
-        ...state
-    }
-}
+const stateToProps = state => state
 
 export default connect(stateToProps, null)(DashBoard)

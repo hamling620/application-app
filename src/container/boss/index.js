@@ -16,11 +16,7 @@ class Boss extends Component {
     }
 }
 
-const stateToProps = state => {
-    return {
-        ...state.chatUser
-    }
-}
+const stateToProps = state => state.chatUser
 
 const dispatchToProps = dispatch => {
     return {
