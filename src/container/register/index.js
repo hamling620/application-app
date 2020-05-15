@@ -40,7 +40,7 @@ class Register extends Component {
                         <RadioItem 
                             checked={this.state.type === 'genius'}
                             onChange={() => this.handleChange('type', 'genius')}
-                        >牛人</RadioItem>
+                        >人才</RadioItem>
                         <WhiteSpace/>
                         <RadioItem
                             checked={this.state.type === 'boss'}

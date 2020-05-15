@@ -11,9 +11,10 @@ function md5Pwd (pwd) {
 }
 
 Router.get('/list', (req, res) => {
-    User.find({}, (err, doc) => {
+    const { type } = req.query
+    User.find({type}, (err, doc) => {
         if (!err) {
-            return res.json(doc)
+            return res.json({code: 0, data: doc})
         }
     })
 })
@@ -62,6 +63,20 @@ Router.get('/info', (req, res) => {
         if (doc) {
             return res.json({code: 0, data: doc})
         }
+    })
+})
+
+Router.post('/update', (req, res) => {
+    const userid = req.cookies.userid
+    if (!userid) {
+        return json.dumps({code: 0})
+    }
+    User.findByIdAndUpdate(userid, req.body, (err, doc) => {
+        if (err) {
+            return res.json({code: 1, msg: '服务器内部错误'})
+        }
+        const data = Object.assign({}, {user: doc.user, type: doc.type }, req.body)
+        return res.json({code: 0, data})
     })
 })
 
