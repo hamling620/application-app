@@ -7,6 +7,7 @@ import AuthRoute from './component/authRoute'
 import BossInfo from './container/bossInfo'
 import GeniusInfo from './container/geniusInfo'
 import DashBoard from './container/dashboard'
+import Chat from './container/chat'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" component={Register}/>
           <Route path="/bossinfo" component={BossInfo} />
           <Route path="/geniusinfo" component={GeniusInfo} />
+          <Route path="/chat/:user" component={Chat} />
           <Route component={DashBoard}/>
         </Switch>
     </Router>

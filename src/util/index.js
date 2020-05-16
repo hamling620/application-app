@@ -5,3 +5,9 @@ export const getRedirectPath = ({type, avatar}) => {
     } 
     return url
 }
+
+export const getChatId = (userId, targetId) => {
+    return [userId, targetId].sort().join('_')
+}
+
+export const emoji = '😀 😁 😂 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 😗 😙 😚 😇 😐 😑 😶 😏   😣 😥 😮 😯 😪 😫 😴 😌 😛 😜 😝 😒 😓 😔 😕 😲 😷 😖 😞 😟 😤 😢 😭 😦 😧 😨 😬 😰 😱 😳 😵 😡 😠 💪 👈 👉 👆 👇 ✋ 👌 👍 👎 ✊ 👊 👋 👏 👐 👦 👧 👨 👩 👴 👵 👶 👱 👮 👲 👳 👷 👸 💂 🎅 👰 👼 💆 💇 🙍 🙎 🙅 🙆 💁 🙋 🙇 🙌 🙏 👤 👥 🚶 🏃 👯 💃 👫 👬 👭 💏 💑 👪'

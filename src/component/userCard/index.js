@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { WingBlank, WhiteSpace, Card } from 'antd-mobile'
+import { withRouter } from 'react-router-dom'
 
 class UserCard extends Component {
     static propTypes = {
@@ -14,7 +15,7 @@ class UserCard extends Component {
                 <WhiteSpace/>
                 {
                     this.props.userList.map(item => 
-                        item.avatar ? (<Card key={item._id}>
+                        item.avatar ? (<Card key={item._id} onClick={ () => this.props.history.push(`/chat/${item._id}`)}>
                             <Header
                                 title={item.username}
                                 thumb={<img src={require(`../../images/${item.avatar}.svg`)} alt={item.avatar} style={{height:'30px'}}/>}
@@ -32,6 +33,7 @@ class UserCard extends Component {
             </WingBlank>
         )
     }
+
 }
 
-export default UserCard
+export default withRouter(UserCard)

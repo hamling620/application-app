@@ -6,6 +6,7 @@ import { Route } from 'react-router-dom'
 import Boss from '../../container/boss'
 import Genius from '../../container/genius'
 import User from '../../container/user'
+import { getMsgList, recvMsg } from '../../store/reducers/chat'
 
 function Msg () {
     return <h1>Genius</h1>
@@ -59,8 +60,21 @@ class DashBoard extends Component {
             </div>
         )
     }
+
+    componentDidMount () {
+        if (this.props.chat.chatmsg.length) return
+        this.props.getMsgList()
+        this.props.recvMsg()
+    }
 }
 
 const stateToProps = state => state
 
-export default connect(stateToProps, null)(DashBoard)
+const dispatchToProps = dispatch => {
+    return {
+        getMsgList: state => dispatch(getMsgList(state)),
+        recvMsg: state => dispatch(recvMsg(state))
+    }
+}
+
+export default connect(stateToProps, dispatchToProps)(DashBoard)

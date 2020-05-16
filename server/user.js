@@ -3,6 +3,7 @@ const Router = express.Router()
 const utils = require('utility')
 const model = require('./model')
 const User = model.getModel('user')
+const Chat = model.getModel('chat')
 const _filter = {'pwd': 0, '__v': 0}
 
 function md5Pwd (pwd) {
@@ -77,6 +78,22 @@ Router.post('/update', (req, res) => {
         }
         const data = Object.assign({}, {user: doc.user, type: doc.type }, req.body)
         return res.json({code: 0, data})
+    })
+})
+
+Router.get('/getmsglist', (req, res) => {
+    // Chat.remove({}, () => {})
+    const userid = req.cookies.userid
+    User.find({}, (e, d) => {
+        const users = {}
+        d.forEach(item => {
+            users[item._id] = {username: item.username, avatar: item.avatar}
+        })
+        Chat.find({$or: [{from: userid}, {to: userid}]}, (err, doc) => {
+            if (!err) {
+                return res.json({code: 0, msgs: doc, users})
+            }
+        })
     })
 })
 

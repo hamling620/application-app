@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { NavBar, InputItem, TextareaItem, Button } from 'antd-mobile'
+import { NavBar, InputItem, TextareaItem, Button, Icon } from 'antd-mobile'
 import AvatarSelect from '../../component/avatarSelect'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
@@ -14,7 +14,7 @@ class GeniusInfo extends Component {
         return (
             <div>
                 {redirect && redirect !== pathname ? <Redirect to={this.props.redirectTo}/> : null}
-                <NavBar mode="dark">人才信息完善</NavBar>
+                <NavBar mode="dark" icon={<Icon type="left" onClick={this.props.history.goBack}/>}>人才信息完善</NavBar>
                 <AvatarSelect selectAvatar={icon => this.props.handleChange('avatar', icon)}/>
                 <InputItem
                     onChange={val => this.props.handleChange('title', val)}
