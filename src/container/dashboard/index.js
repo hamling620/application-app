@@ -6,11 +6,8 @@ import { Route } from 'react-router-dom'
 import Boss from '../../container/boss'
 import Genius from '../../container/genius'
 import User from '../../container/user'
+import Msg from '../../container/msg'
 import { getMsgList, recvMsg } from '../../store/reducers/chat'
-
-function Msg () {
-    return <h1>Genius</h1>
-}
 
 class DashBoard extends Component {
     render () {

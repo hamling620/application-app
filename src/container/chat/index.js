@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { InputItem, Button, List, NavBar, Icon, Grid, PullToRefresh } from 'antd-mobile'
+import { InputItem, Button, List, NavBar, Icon, Grid } from 'antd-mobile'
 import { connect } from 'react-redux'
-import { getMsgList, sendMsg, recvMsg } from '../../store/reducers/chat'
+import { getMsgList, sendMsg, recvMsg, readMsg } from '../../store/reducers/chat'
 import { getChatId, emoji } from '../../util'
 
 class Chat extends Component {
@@ -29,26 +29,24 @@ class Chat extends Component {
                     { users[userid].username }
                 </NavBar>
                 <div className="chat-list">
-                    <PullToRefresh direction="up" onRefresh={() => null}>
-                        {
-                            chatmsg.map(item => {
-                                const avatar = require(`../../images/${users[item.from].avatar}.svg`)
-                                if (item.from === userid) {
-                                    return (
-                                        <List key={item._id}>
-                                            <Item multipleLine thumb={avatar}>{item.content}</Item>
-                                        </List>
-                                    )
-                                } else {
-                                    return (
-                                        <List className="me" key={item._id}>
-                                            <Item extra={<img src={avatar} alt={avatar}/>} multipleLine>{item.content}</Item>
-                                        </List>
-                                    )
-                                }
-                            })
-                        } 
-                    </PullToRefresh> 
+                    {
+                        chatmsg.map(item => {
+                            const avatar = require(`../../images/${users[item.from].avatar}.svg`)
+                            if (item.from === userid) {
+                                return (
+                                    <List key={item._id}>
+                                        <Item multipleLine thumb={avatar}>{item.content}</Item>
+                                    </List>
+                                )
+                            } else {
+                                return (
+                                    <List className="me" key={item._id}>
+                                        <Item extra={<img src={avatar} alt={avatar}/>} multipleLine>{item.content}</Item>
+                                    </List>
+                                )
+                            }
+                        })
+                    } 
                 </div>
                 <div id="sticky-footer">
                     <List>
@@ -56,7 +54,7 @@ class Chat extends Component {
                             value={this.state.text}
                             onChange={v => this.handleChange('text', v)}
                         />
-                        <span style={{fontSize: '24px',marginRight: '10px'}} onClick={this.handleShowEmoji}>😀</span>
+                        <span style={{fontSize: '24px',marginRight: '10px'}} onClick={this.handleShowEmoji} role="img" aria-label="emoji">😀</span>
                         <Button type="primary" size="small" onClick={this.handleSubmit}>发送</Button>
                     </List>
                     {
@@ -79,6 +77,11 @@ class Chat extends Component {
         this.props.getMsgList()
         this.props.recvMsg()
         this.fixCarousel()
+    }
+
+    componentWillMount () {
+        const to = this.props.match.params.user
+        this.props.readMsg(to)
     }
 
     fixCarousel () {
@@ -125,7 +128,8 @@ const dispatchToProps = dispatch => {
     return {
         getMsgList: state => dispatch(getMsgList(state)),
         sendMsg: state => dispatch(sendMsg(state)),
-        recvMsg: state => dispatch(recvMsg(state))
+        recvMsg: state => dispatch(recvMsg(state)),
+        readMsg: state => dispatch(readMsg(state))
     }
 }
  

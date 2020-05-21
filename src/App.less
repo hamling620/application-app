@@ -31,7 +31,10 @@
     display: flex;
     flex-direction: column;
     .chat-list {
-        height: calc(100vh - 89px);
+        padding: 45px 0;
+        // position: fixed;
+        bottom: 0;
+        width: 100%;
         .me .am-list-body {
             display: flex;
             justify-content: flex-end;
@@ -43,6 +46,12 @@
             flex-basis: auto;
             margin-left: 20px;
         }
+    }
+    .am-navbar {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 2;
     }
     #sticky-footer .am-list-body{
         display: flex;
